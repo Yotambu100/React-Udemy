@@ -4,12 +4,13 @@ import ExpensesFilter from "./ExpensesFilter";
 import Card from "../../styling/Card";
 import './Expenses.css'
 import ExpensesList from "./ExpensesList";
+import ExpensesChart from "./ExpensesChart";
 
 
 const Expenses = props => {
     const [filteredYear, setFilteredYear] = useState('2020')
 
-    const expenses = props.expenses
+    const filteredExpenses = props.expenses.filter((expense => expense.date.getFullYear().toString() === filteredYear))
     const filterChangeHandler = selectedYear => {
         setFilteredYear(selectedYear);
     }
@@ -18,7 +19,8 @@ const Expenses = props => {
         <div>
             <Card className='expenses'>
                 <ExpensesFilter selected={filteredYear} onChangeFilter={filterChangeHandler}/>
-                <ExpensesList items={expenses.filter((expense => expense.date.getFullYear().toString() === filteredYear))}/>
+                <ExpensesChart expenses={filteredExpenses}/>
+                <ExpensesList items={filteredExpenses}/>
             </Card>
         </div>);
 
